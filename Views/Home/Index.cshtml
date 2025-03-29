@@ -1,0 +1,299 @@
+@{
+    ViewData["Title"] = "خانه";
+    Layout = "_Layout";
+}
+
+<!-- Hero Section -->
+<div class="container py-5">
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <h1 class="display-4 fw-bold mb-3 animate__animated animate__fadeIn">ایده‌هایی که برای شما مهم هستند را کشف کنید.</h1>
+            <p class="lead text-muted mb-4 animate__animated animate__fadeIn animate__delay-1s">
+                دیدگاه‌های جدید درباره تقریباً هر موضوعی را بخوانید و به اشتراک بگذارید. همه خوش آمدید.
+            </p>
+            <div class="animate__animated animate__fadeIn animate__delay-2s">
+                <a asp-controller="Account" asp-action="Register" class="btn btn-dark btn-lg px-4 me-2">شروع کنید</a>
+                <a asp-controller="Blog" asp-action="Index" class="btn btn-outline-dark btn-lg px-4">جستجو</a>
+            </div>
+        </div>
+        <div class="col-lg-6 animate__animated animate__fadeIn animate__delay-1s">
+            <img src="https://picsum.photos/id/1018/1200/800" 
+                 class="img-fluid rounded shadow" alt="کشف ایده‌ها">
+        </div>
+    </div>
+</div>
+
+<!-- Trending Topics -->
+<div class="bg-light py-4 mb-5">
+    <div class="container">
+        <div class="d-flex align-items-center mb-3">
+            <h6 class="mb-0 me-3 fw-bold">موضوعات داغ در اُرب</h6>
+            <div class="border-top flex-grow-1" style="height: 1px;"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="d-flex animate__animated animate__fadeIn">
+                    <div class="me-3">
+                        <span class="display-4 text-muted fw-bold">۰۱</span>
+                    </div>
+                    <div>
+                        <div class="d-flex align-items-center mb-2 profile-item-container">
+                            <img src="https://randomuser.me/api/portraits/men/75.jpg" class="rounded-circle" width="24" height="24" alt="نویسنده">
+                            <div class="user-info">
+                                <span class="small fw-medium">علی حسینی</span>
+                            </div>
+                        </div>
+                        <h5 class="fw-bold mb-1">آینده هوش مصنوعی در تولید محتوا</h5>
+                        <div class="d-flex align-items-center text-muted small">
+                            <span>۲۴ اردیبهشت</span>
+                            <span class="mx-1">·</span>
+                            <span>۸ دقیقه مطالعه</span>
+                            <span class="ms-2 badge bg-light text-dark">تکنولوژی</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="d-flex animate__animated animate__fadeIn animate__delay-1s">
+                    <div class="me-3">
+                        <span class="display-4 text-muted fw-bold">۰۲</span>
+                    </div>
+                    <div>
+                        <div class="d-flex align-items-center mb-2 profile-item-container">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" class="rounded-circle" width="24" height="24" alt="نویسنده">
+                            <div class="user-info">
+                                <span class="small fw-medium">مریم رضایی</span>
+                            </div>
+                        </div>
+                        <h5 class="fw-bold mb-1">زندگی پایدار: تغییرات کوچک، تأثیر بزرگ</h5>
+                        <div class="d-flex align-items-center text-muted small">
+                            <span>۲۲ اردیبهشت</span>
+                            <span class="mx-1">·</span>
+                            <span>۶ دقیقه مطالعه</span>
+                            <span class="ms-2 badge bg-light text-dark">سبک زندگی</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="d-flex animate__animated animate__fadeIn animate__delay-2s">
+                    <div class="me-3">
+                        <span class="display-4 text-muted fw-bold">۰۳</span>
+                    </div>
+                    <div>
+                        <div class="d-flex align-items-center mb-2 profile-item-container">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" class="rounded-circle" width="24" height="24" alt="نویسنده">
+                            <div class="user-info">
+                                <span class="small fw-medium">محمد احمدی</span>
+                            </div>
+                        </div>
+                        <h5 class="fw-bold mb-1">روانشناسی طراحی عالی</h5>
+                        <div class="d-flex align-items-center text-muted small">
+                            <span>۲۰ اردیبهشت</span>
+                            <span class="mx-1">·</span>
+                            <span>۱۰ دقیقه مطالعه</span>
+                            <span class="ms-2 badge bg-light text-dark">طراحی</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <!-- Articles Column -->
+        <div class="col-lg-8">
+            <!-- Featured Article -->
+            <article class="mb-5 pb-5 border-bottom animate__animated animate__fadeIn">
+                <h2 class="fw-bold mb-3">چگونه مینیمالیسم دیدگاه من درباره طراحی را تغییر داد</h2>
+                <p class="lead text-muted mb-3">هنر ظریف انجام کارهای بیشتر با کمترین امکانات در دنیای دیجیتال شلوغ امروز.</p>
+                
+                <div class="d-flex align-items-center mb-3 profile-item-container">
+                    <img src="https://randomuser.me/api/portraits/women/42.jpg" class="rounded-circle" width="40" height="40" alt="نویسنده">
+                    <div class="user-info">
+                        <div class="fw-medium">سارا جعفری</div>
+                        <div class="text-muted small">۲۵ اردیبهشت · ۱۲ دقیقه مطالعه</div>
+                    </div>
+                </div>
+                
+                <img src="https://picsum.photos/id/26/1200/600" 
+                     class="img-fluid rounded mb-3 w-100" alt="مقاله مینیمالیسم">
+                
+                <p>وقتی برای اولین بار با مینیمالیسم به عنوان یک فلسفه طراحی روبرو شدم، شک داشتم. چگونه «کمتر» می‌تواند در دنیایی که مدام با گرافیک‌های چشمگیر و عبارات پررنگ توجه ما را جلب می‌کند، مؤثرتر باشد؟ اما هنگامی که عمیق‌تر به اصول طراحی مینیمالیستی پرداختم، تأثیر عمیق آن را درک کردم...</p>
+                
+                <a href="/Blog/Article/1" class="text-decoration-none">ادامه مطلب ←</a>
+            </article>
+            
+            <!-- Regular Articles -->
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <h3 class="fw-bold mb-2">ظهور فرهنگ کار از راه دور</h3>
+                    <p>چگونه شرکت‌ها با وضعیت جدید تیم‌های پراکنده و همکاری مجازی سازگار می‌شوند.</p>
+                    <div class="d-flex align-items-center mb-2 profile-item-container">
+                        <img src="https://randomuser.me/api/portraits/men/53.jpg" class="rounded-circle" width="24" height="24" alt="نویسنده">
+                        <div class="user-info">
+                            <span class="fw-medium">امیر مرادی</span>
+                            <span class="mx-1 text-muted">·</span>
+                            <span class="text-muted small">۱۸ اردیبهشت</span>
+                            <span class="mx-1 text-muted">·</span>
+                            <span class="text-muted small">۸ دقیقه مطالعه</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img src="https://picsum.photos/id/130/300/200" 
+                         class="img-fluid rounded" alt="کار از راه دور">
+                </div>
+                <div class="col-12"><hr></div>
+            </div>
+            
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <h3 class="fw-bold mb-2">نوآوری در عصر دیجیتال</h3>
+                    <p>چالش‌ها و فرصت‌های خلاقیت در دنیای پرسرعت امروز.</p>
+                    <div class="d-flex align-items-center mb-2 profile-item-container">
+                        <img src="https://randomuser.me/api/portraits/women/48.jpg" class="rounded-circle" width="24" height="24" alt="نویسنده">
+                        <div class="user-info">
+                            <span class="fw-medium">نگار کریمی</span>
+                            <span class="mx-1 text-muted">·</span>
+                            <span class="text-muted small">۱۵ اردیبهشت</span>
+                            <span class="mx-1 text-muted">·</span>
+                            <span class="text-muted small">۷ دقیقه مطالعه</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img src="https://picsum.photos/id/48/300/200" 
+                         class="img-fluid rounded" alt="نوآوری دیجیتال">
+                </div>
+                <div class="col-12"><hr></div>
+            </div>
+            
+            <!-- More articles... -->
+            
+            <div class="text-center mt-4 mb-5">
+                <a asp-controller="Blog" asp-action="Index" class="btn btn-outline-dark rounded-pill px-4">مشاهده مقالات بیشتر</a>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="position-sticky" style="top: 5rem;">
+                <!-- Discover by Topic -->
+                <div class="mb-5">
+                    <h5 class="mb-3 fw-bold">کشف بر اساس موضوع</h5>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="#" class="btn btn-sm btn-light rounded-pill">تکنولوژی</a>
+                        <a href="#" class="btn btn-sm btn-light rounded-pill">طراحی</a>
+                        <a href="#" class="btn btn-sm btn-light rounded-pill">کسب و کار</a>
+                        <a href="#" class="btn btn-sm btn-light rounded-pill">بهره‌وری</a>
+                        <a href="#" class="btn btn-sm btn-light rounded-pill">سلامتی</a>
+                        <a href="#" class="btn btn-sm btn-light rounded-pill">علم</a>
+                    </div>
+                </div>
+                
+                <!-- Popular Authors -->
+                <div class="mb-5">
+                    <h5 class="mb-3 fw-bold">افرادی که می‌توانید دنبال کنید</h5>
+                    <div class="d-flex align-items-center mb-3 profile-item-container">
+                        <img src="https://randomuser.me/api/portraits/women/33.jpg" class="rounded-circle" width="40" height="40" alt="پروفایل">
+                        <div class="user-info">
+                            <div class="fw-medium">فاطمه کاظمی</div>
+                            <div class="text-muted small">طراح UI/UX و نویسنده</div>
+                        </div>
+                        <button class="btn btn-sm btn-outline-dark rounded-pill me-auto">دنبال کردن</button>
+                    </div>
+                    <div class="d-flex align-items-center mb-3 profile-item-container">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" class="rounded-circle" width="40" height="40" alt="پروفایل">
+                        <div class="user-info">
+                            <div class="fw-medium">رضا محمدی</div>
+                            <div class="text-muted small">برنامه‌نویس و مدرس</div>
+                        </div>
+                        <button class="btn btn-sm btn-outline-dark rounded-pill me-auto">دنبال کردن</button>
+                    </div>
+                    <div class="d-flex align-items-center mb-3 profile-item-container">
+                        <img src="https://randomuser.me/api/portraits/women/22.jpg" class="rounded-circle" width="40" height="40" alt="پروفایل">
+                        <div class="user-info">
+                            <div class="fw-medium">نیلوفر تهرانی</div>
+                            <div class="text-muted small">روزنامه‌نگار تکنولوژی</div>
+                        </div>
+                        <button class="btn btn-sm btn-outline-dark rounded-pill me-auto">دنبال کردن</button>
+                    </div>
+                </div>
+                
+                <!-- Featured Posts -->
+                <div class="mb-5">
+                    <h5 class="mb-3 fw-bold">پست‌های منتخب</h5>
+                    <div class="card mb-3 border-0 shadow-sm">
+                        <div class="row g-0">
+                            <div class="col-4">
+                                <img src="https://picsum.photos/id/96/100/100" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="پست منتخب">
+                            </div>
+                            <div class="col-8">
+                                <div class="card-body">
+                                    <h6 class="card-title">رازهای موفقیت در دنیای دیجیتال</h6>
+                                    <p class="card-text small text-muted">۵ دقیقه مطالعه</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3 border-0 shadow-sm">
+                        <div class="row g-0">
+                            <div class="col-4">
+                                <img src="https://picsum.photos/id/117/100/100" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="پست منتخب">
+                            </div>
+                            <div class="col-8">
+                                <div class="card-body">
+                                    <h6 class="card-title">آینده هوش مصنوعی در زندگی روزمره</h6>
+                                    <p class="card-text small text-muted">۷ دقیقه مطالعه</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+    /* Profile container styling for proper RTL spacing */
+    .profile-item-container {
+        margin-bottom: 0.5rem;
+    }
+    
+    .profile-item-container img {
+        margin-left: 0.75rem !important;
+        margin-right: 0 !important;
+    }
+    
+    .user-info {
+        padding-right: 0;
+    }
+    
+    /* Fix for RTL margin and padding */
+    .ms-2 {
+        margin-right: 0.5rem !important;
+        margin-left: 0 !important;
+    }
+    
+    .me-2 {
+        margin-left: 0.5rem !important;
+        margin-right: 0 !important;
+    }
+    
+    .me-3 {
+        margin-left: 1rem !important;
+        margin-right: 0 !important;
+    }
+</style>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" />
+}

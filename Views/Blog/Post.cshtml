@@ -1,0 +1,16 @@
+@model Orb.Web.Models.BlogPost
+
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h1>@Model.Title</h1>
+    <p><em>Posted on @Model.CreatedAt.ToString("MMMM dd, yyyy") by @Model.Author</em></p>
+    <div class="content">
+        @Html.Raw(Model.Content)
+    </div>
+    <hr />
+    <a href="@Url.Action("Index", "Blog")" class="btn btn-primary">Back to Blog</a>
+</div>

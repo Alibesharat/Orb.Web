@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Orb.Web.props" />
+</Project>

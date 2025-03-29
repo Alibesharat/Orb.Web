@@ -1,0 +1,25 @@
+@model IEnumerable<Orb.Web.Models.BlogPost>
+@{
+    ViewData["Title"] = "Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Blog</h1>
+
+<div class="blog-posts">
+    @if (Model != null && Model.Any())
+    {
+        foreach (var post in Model)
+        {
+            <div class="blog-post">
+                <h2>@Html.DisplayFor(m => post.Title)</h2>
+                <p>@Html.DisplayFor(m => post.CreatedAt)</p>
+                <a href="@Url.Action("Post", "Blog", new { id = post.Id })" class="btn btn-primary">Read More</a>
+            </div>
+        }
+    }
+    else
+    {
+        <p>No blog posts available.</p>
+    }
+</div>
