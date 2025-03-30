@@ -140,5 +140,15 @@ namespace Orb.Web.Services
                 .OrderByDescending(p => p.CreatedAt)
                 .ToListAsync();
         }
+
+        public async Task<List<BlogPost>> GetRecentPostsAsync(int count)
+        {
+            return await _context.BlogPosts
+            .Include(c => c.Author)
+                .Where(p => p.IsPublished)
+                .OrderByDescending(p => p.CreatedAt)
+                .Take(count)
+                .ToListAsync();
+        }
     }
 }

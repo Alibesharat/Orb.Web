@@ -13,6 +13,9 @@ using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Set the DataDirectory to the application's root folder.
+AppDomain.CurrentDomain.SetData("DataDirectory", Directory.GetCurrentDirectory());
+
 try
 {
     // Configure configuration sources
@@ -41,7 +44,7 @@ try
     // Add services to the container
     builder.Services.AddControllersWithViews();
     builder.Services.AddRazorPages();
-    
+
     // Add HttpContext accessor
     builder.Services.AddHttpContextAccessor();
 
@@ -59,7 +62,7 @@ try
     builder.Services.AddAuthorization(options =>
     {
         // Example policy
-        options.AddPolicy("RequireAdminRole", policy => 
+        options.AddPolicy("RequireAdminRole", policy =>
             policy.RequireRole("Admin"));
     });
 
@@ -67,7 +70,6 @@ try
     builder.Services.AddScoped<BlogService>();
     builder.Services.AddScoped<UserService>();
 
-   
     var app = builder.Build();
 
     // Configure the HTTP request pipeline

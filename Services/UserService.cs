@@ -1,26 +1,22 @@
 using Microsoft.EntityFrameworkCore;
 using Orb.Web.Data;
 using Orb.Web.Models;
-using System;
-using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Orb.Web.Services
 {
     public class UserService
     {
-        private readonly ApplicationDbContext _context;
-
-        public UserService(ApplicationDbContext context)
-        {
-            _context = context;
+        private readonly ApplicationDbContext _context; 
+        private readonly ILogger<UserService> _logger;
+        public UserService(ApplicationDbContext context, ILogger<UserService> logger)
+        {   _context = context;
+            _context = context;           
+            _logger = logger;
         }
-
         public async Task<User> GetUserByIdAsync(int id)
-        {
-            return await _context.Users.FindAsync(id);
+        {            return await _context.Users.FindAsync(id);
         }
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
@@ -139,6 +135,22 @@ namespace Orb.Web.Services
             {
                 follower.Following.Remove(followed);
                 await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<BlogPost>> GetUserBlogPostsAsync(int userId)
+        {
+            try
+            {
+                return await _context.BlogPosts
+                    .Where(p => p.AuthorId == userId)
+                    .OrderByDescending(p => p.CreatedAt)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error retrieving blog posts for user {userId}");
+                return new List<BlogPost>();
             }
         }
     }

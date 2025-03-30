@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Orb.Web.Models;
 using Orb.Web.Services;
@@ -18,7 +19,6 @@ namespace Orb.Web.Controllers
         }
 
         [HttpGet]
-
         public IActionResult Register()
         {
             return View();
@@ -105,6 +105,20 @@ namespace Orb.Web.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Profile()
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var user = await _userService.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            
+            ViewBag.Posts = await _userService.GetUserBlogPostsAsync(userId);
+            return View(user);
         }
 
         private async Task SignInAsync(User user)

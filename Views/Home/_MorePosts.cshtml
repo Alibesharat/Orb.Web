@@ -1,0 +1,26 @@
+@model IEnumerable<Orb.Web.Models.BlogPost>
+
+@foreach(var post in Model)
+{
+    <div class="row mb-4" onclick="GotoPost(@post.Id)" style="cursor: pointer;">
+        <div class="col-md-8">
+            <h3 class="fw-bold mb-2">@post.Title</h3>
+            <p>@post.Summary</p>
+            <div class="d-flex align-items-center mb-2 profile-item-container">
+                <img src="@post.Author?.ProfileImageUrl" class="rounded-circle" width="24" height="24" alt="نویسنده">
+                <div class="user-info">
+                    <span class="fw-medium">@post.Author?.DisplayName</span>
+                    <span class="mx-1 text-muted">·</span>
+                    <span class="text-muted small">@post.CreatedAt.ToString("dd MMM", new System.Globalization.CultureInfo("fa-IR"))</span>
+                    <span class="mx-1 text-muted">·</span>
+                    <span class="text-muted small">@post.ReadTime دقیقه مطالعه</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <img src="@post.CoverImageUrl" 
+                 class="img-fluid rounded" alt="@post.Title">
+        </div>
+        <div class="col-12"><hr></div>
+    </div>
+}
