@@ -17,6 +17,8 @@ namespace Orb.Web.Controllers
             _userService = userService;
         }
 
+        [HttpGet]
+
         public IActionResult Register()
         {
             return View();
@@ -25,43 +27,54 @@ namespace Orb.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            // Log the incoming request
+            Console.WriteLine($"Register POST received for user: {model.Username}");
+            
+            if (!ModelState.IsValid)
             {
-                // Check if username is already taken
-                if (await _userService.UsernameExistsAsync(model.Username))
+                Console.WriteLine("ModelState invalid:");
+                foreach (var state in ModelState)
                 {
-                    ModelState.AddModelError("Username", "نام کاربری قبلاً استفاده شده است");
-                    return View(model);
+                    foreach (var error in state.Value.Errors)
+                    {
+                        Console.WriteLine($"- {state.Key}: {error.ErrorMessage}");
+                    }
                 }
-
-                // Check if email is already taken
-                if (await _userService.EmailExistsAsync(model.Email))
-                {
-                    ModelState.AddModelError("Email", "این ایمیل قبلاً ثبت شده است");
-                    return View(model);
-                }
-
-                // Create new user
-                var user = new User
-                {
-                    Username = model.Username,
-                    Email = model.Email,
-                    DisplayName = model.DisplayName,
-                    Password = _userService.HashPassword(model.Password),
-                    Bio = "",
-                    ProfileImageUrl = $"https://randomuser.me/api/portraits/{(new Random().Next(0, 2) == 0 ? "men" : "women")}/{new Random().Next(1, 99)}.jpg",
-                    CreatedAt = DateTime.UtcNow
-                };
-
-                await _userService.CreateUserAsync(user);
-
-                // Auto login after registration
-                await SignInAsync(user);
-
-                return RedirectToAction("Index", "Home");
+                return View(model);
+            }
+            
+            // Check if username is already taken
+            if (await _userService.UsernameExistsAsync(model.Username))
+            {
+                ModelState.AddModelError("Username", "نام کاربری قبلاً استفاده شده است");
+                return View(model);
             }
 
-            return View(model);
+            // Check if email is already taken
+            if (await _userService.EmailExistsAsync(model.Email))
+            {
+                ModelState.AddModelError("Email", "این ایمیل قبلاً ثبت شده است");
+                return View(model);
+            }
+
+            // Create new user
+            var user = new User
+            {
+                Username = model.Username,
+                Email = model.Email,
+                DisplayName = model.DisplayName,
+                Password = _userService.HashPassword(model.Password),
+                Bio = "",
+                ProfileImageUrl = $"https://randomuser.me/api/portraits/{(new Random().Next(0, 2) == 0 ? "men" : "women")}/{new Random().Next(1, 99)}.jpg",
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _userService.CreateUserAsync(user);
+
+            // Auto login after registration
+            await SignInAsync(user);
+
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Login()
