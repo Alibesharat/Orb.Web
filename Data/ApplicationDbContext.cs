@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Orb.Web.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Orb.Web.Data
@@ -19,13 +22,24 @@ namespace Orb.Web.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure Tags as a converted column since EF Core can't store lists directly
+            // Create a value converter for the Tags property
+            var tagsConverter = new ValueConverter<List<string>, string>(
+                v => string.Join(',', v ?? new List<string>()),
+                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList()
+            );
+
+            // Create a value comparer for the Tags property
+            var tagsComparer = new ValueComparer<List<string>>(
+                (c1, c2) => c1.SequenceEqual(c2),                  // Compare lists for equality
+                c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())), // Get hash code
+                c => c.ToList()                                   // Create snapshot for change tracking
+            );
+
+            // Apply both the converter and comparer to the Tags property
             modelBuilder.Entity<BlogPost>()
                 .Property(b => b.Tags)
-                .HasConversion(
-                    v => string.Join(',', v ?? new List<string>()),
-                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList()
-                );
+                .HasConversion(tagsConverter)
+                .Metadata.SetValueComparer(tagsComparer);
 
             // Configure many-to-many relationship for User Following
             modelBuilder.Entity<User>()
