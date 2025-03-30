@@ -1,0 +1,52 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# Visual Studio files
+.vs/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.dbmdl
+*.dbproj.schemaview
+*.pfx
+*.publishsettings
+
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# MSBuild Binary and Structured Log
+*.binlog
+
+# Visual Studio temporary files
+*.log
+*.vspscc
+*.vssscc
+.builds
+
+# StyleCop
+StyleCopReport.xml
+
+# Test Results
+[Tt]est[Rr]esult*/
+*.coverage
+*.coveragexml
+
+# Local appsettings
+appsettings.Development.json
+appsettings.local.json
+
+# User secrets
+*.usersecrets
