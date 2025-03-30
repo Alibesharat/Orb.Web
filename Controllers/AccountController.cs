@@ -114,7 +114,8 @@ namespace Orb.Web.Controllers
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim("DisplayName", user.DisplayName ?? "")
+                new Claim("DisplayName", user.DisplayName ?? ""),
+                new Claim("ProfileImageUrl", user.ProfileImageUrl ?? "https://via.placeholder.com/32")
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
