@@ -1,0 +1,59 @@
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "ثبت نام";
+    Layout = "_Layout";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4">ثبت نام در اُرب</h2>
+                    
+                    <form asp-action="Register" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="DisplayName" class="form-label">نام نمایشی</label>
+                            <input asp-for="DisplayName" class="form-control" placeholder="نام قابل نمایش برای دیگران"/>
+                            <span asp-validation-for="DisplayName" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Username" class="form-label">نام کاربری</label>
+                            <div class="input-group">
+                                <input asp-for="Username" class="form-control" placeholder="نام کاربری منحصر به فرد"/>
+                            </div>
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">ایمیل</label>
+                            <input asp-for="Email" class="form-control" placeholder="example@email.com"/>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">رمز عبور</label>
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="ConfirmPassword" class="form-label">تکرار رمز عبور</label>
+                            <input asp-for="ConfirmPassword" class="form-control" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-dark w-100 py-2">ثبت نام</button>
+                    </form>
+                    
+                    <div class="mt-4 text-center">
+                        <p>قبلاً ثبت نام کرده‌اید؟ <a href="/Account/Login" class="text-decoration-none">ورود</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

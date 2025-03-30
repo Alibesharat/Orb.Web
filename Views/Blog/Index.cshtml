@@ -1,25 +1,136 @@
 @model IEnumerable<Orb.Web.Models.BlogPost>
 @{
-    ViewData["Title"] = "Blog";
+    ViewData["Title"] = "بلاگ";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var popularTags = ViewBag.PopularTags as List<string> ?? new List<string>();
 }
 
-<h1>Blog</h1>
-
-<div class="blog-posts">
-    @if (Model != null && Model.Any())
-    {
-        foreach (var post in Model)
-        {
-            <div class="blog-post">
-                <h2>@Html.DisplayFor(m => post.Title)</h2>
-                <p>@Html.DisplayFor(m => post.CreatedAt)</p>
-                <a href="@Url.Action("Post", "Blog", new { id = post.Id })" class="btn btn-primary">Read More</a>
+<div class="container py-5">
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-9">
+            <div class="d-flex align-items-center mb-4">
+                <h1 class="mb-0">مقالات</h1>
+                <div class="ms-auto">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            @(ViewBag.CurrentSort == "popular" ? "محبوب‌ترین" : "جدیدترین")
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item @(ViewBag.CurrentSort == "latest" ? "active" : "")" 
+                                  href="@Url.Action("Index", "Blog", new { tag = ViewBag.CurrentTag, sort = "latest" })">جدیدترین</a></li>
+                            <li><a class="dropdown-item @(ViewBag.CurrentSort == "popular" ? "active" : "")" 
+                                  href="@Url.Action("Index", "Blog", new { tag = ViewBag.CurrentTag, sort = "popular" })">محبوب‌ترین</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        }
-    }
-    else
-    {
-        <p>No blog posts available.</p>
-    }
+
+            @if (ViewBag.CurrentTag != null)
+            {
+                <div class="alert alert-light mb-4">
+                    نمایش مقالات با برچسب: <strong>@ViewBag.CurrentTag</strong>
+                    <a href="@Url.Action("Index", "Blog")" class="ms-2 text-decoration-none small">
+                        <i class="fas fa-times"></i> حذف فیلتر
+                    </a>
+                </div>
+            }
+
+            @if (Model != null && Model.Any())
+            {
+                <div class="blog-posts">
+                    @foreach (var post in Model)
+                    {
+                        <div class="card border-0 mb-4">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    @if (!string.IsNullOrEmpty(post.CoverImageUrl))
+                                    {
+                                        <img src="@post.CoverImageUrl" class="img-fluid rounded" 
+                                             style="height: 200px; width: 100%; object-fit: cover;" alt="@post.Title">
+                                    }
+                                    else
+                                    {
+                                        <div class="bg-light rounded d-flex align-items-center justify-content-center" 
+                                             style="height: 200px;">
+                                            <span class="text-muted">بدون تصویر</span>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body ps-md-4">
+                                        <h2 class="card-title h4 fw-bold mb-2">
+                                            <a href="@Url.Action("Post", "Blog", new { id = post.Id })" 
+                                               class="text-decoration-none text-dark stretched-link">@post.Title</a>
+                                        </h2>
+                                        <p class="card-text text-muted mb-3">@post.Summary</p>
+                                        
+                                        <div class="d-flex align-items-center">
+                                            <img src="@(post.Author?.ProfileImageUrl ?? "https://randomuser.me/api/portraits/men/1.jpg")" 
+                                                 class="rounded-circle ms-2" width="32" height="32" alt="نویسنده">
+                                            <div>
+                                                <div class="small fw-medium">@(post.Author?.DisplayName ?? "نویسنده")</div>
+                                                <div class="text-muted small">
+                                                    @post.CreatedAt.ToString("dd MMMM yyyy") · 
+                                                    @post.ReadTime دقیقه مطالعه
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center p-5 bg-light rounded">
+                    <p class="mb-0">مقاله‌ای برای نمایش وجود ندارد.</p>
+                </div>
+            }
+            
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="mt-5 text-center">
+                    <a asp-controller="Blog" asp-action="New" class="btn btn-dark btn-lg rounded-pill px-4">
+                        <i class="fas fa-pen me-2"></i> نوشتن مقاله جدید
+                    </a>
+                </div>
+            }
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-3">
+            <div class="position-sticky" style="top: 5rem;">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="mb-4 p-3 bg-light rounded">
+                        <div class="d-grid gap-2">
+                            <a asp-controller="Blog" asp-action="New" class="btn btn-dark">
+                                <i class="fas fa-pen me-2"></i> نوشتن مقاله جدید
+                            </a>
+                            <a asp-controller="Blog" asp-action="MyPosts" class="btn btn-outline-dark">
+                                مقالات من
+                            </a>
+                        </div>
+                    </div>
+                }
+                
+                @if (popularTags.Any())
+                {
+                    <div class="mb-4">
+                        <h5 class="mb-3 fw-bold">برچسب‌های محبوب</h5>
+                        <div class="d-flex flex-wrap gap-2">
+                            @foreach (var tag in popularTags)
+                            {
+                                <a href="@Url.Action("Index", "Blog", new { tag = tag })" 
+                                   class="btn btn-sm btn-light rounded-pill">@tag</a>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>

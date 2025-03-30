@@ -1,16 +1,114 @@
+@using Orb.Web.Models
 @model Orb.Web.Models.BlogPost
-
 @{
     ViewData["Title"] = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-5">
-    <h1>@Model.Title</h1>
-    <p><em>Posted on @Model.CreatedAt.ToString("MMMM dd, yyyy") by @Model.Author</em></p>
-    <div class="content">
-        @Html.Raw(Model.Content)
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            @if (!string.IsNullOrEmpty(Model.CoverImageUrl))
+            {
+                <img src="@Model.CoverImageUrl" class="img-fluid rounded mb-4 w-100" 
+                     style="max-height: 500px; object-fit: cover;" alt="@Model.Title">
+            }
+            
+            <h1 class="display-4 fw-bold mb-3">@Model.Title</h1>
+            
+            <div class="d-flex align-items-center mb-4">
+                <img src="@(Model.Author?.ProfileImageUrl ?? "https://randomuser.me/api/portraits/men/1.jpg")" 
+                     class="rounded-circle ms-2" width="48" height="48" alt="نویسنده">
+                <div>
+                    <div class="fw-medium">@(Model.Author?.DisplayName ?? "نویسنده")</div>
+                    <div class="text-muted small">
+                        @Model.CreatedAt.ToString("dd MMMM yyyy") · 
+                        @Model.ReadTime دقیقه مطالعه
+                    </div>
+                </div>
+                
+                @if (User.Identity.IsAuthenticated && Model.Author != null)
+                {
+                    <div class="me-auto">
+                        <button class="btn btn-sm btn-outline-dark rounded-pill">دنبال کردن</button>
+                    </div>
+                }
+            </div>
+            
+            <div class="d-flex align-items-center mb-4">
+                @if (Model.Tags != null && Model.Tags.Any())
+                {
+                    foreach (var tag in Model.Tags)
+                    {
+                        <a href="@Url.Action("Index", "Blog", new { tag })" 
+                           class="badge bg-light text-dark text-decoration-none me-2">@tag</a>
+                    }
+                }
+            </div>
+            
+            <div class="article-content mb-5">
+                @Html.Raw(Model.Content)
+            </div>
+            
+            <div class="d-flex justify-content-between align-items-center mb-5 py-3 border-top border-bottom">
+                <div>
+                    <button class="btn btn-sm btn-light rounded-circle me-2">
+                        <i class="fa fa-heart"></i>
+                    </button>
+                    <span class="text-muted small">@Model.LikeCount</span>
+                </div>
+                <div>
+                    <button class="btn btn-sm btn-light rounded-circle me-2">
+                        <i class="fa fa-bookmark"></i>
+                    </button>
+                    <button class="btn btn-sm btn-light rounded-circle">
+                        <i class="fa fa-share-alt"></i>
+                    </button>
+                </div>
+            </div>
+            
+            @if (Model.Author != null)
+            {
+                <div class="author-profile bg-light p-4 rounded mb-5">
+                    <div class="d-flex">
+                        <img src="@Model.Author.ProfileImageUrl" class="rounded-circle ms-3" 
+                             width="72" height="72" alt="@Model.Author.DisplayName">
+                        <div>
+                            <h5 class="mb-1">@Model.Author.DisplayName</h5>
+                            <p class="text-muted mb-2">@Model.Author.Bio</p>
+                            <button class="btn btn-outline-dark rounded-pill">دنبال کردن</button>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+            @if (ViewBag.RelatedPosts != null && ((IEnumerable<BlogPost>)ViewBag.RelatedPosts).Any())
+            {
+                <h3 class="mb-4">مقالات مرتبط</h3>
+                <div class="row">
+                    @foreach (var relatedPost in (IEnumerable<BlogPost>)ViewBag.RelatedPosts)
+                    {
+                        <div class="col-md-4 mb-4">
+                            <div class="card border-0 h-100">
+                                @if (!string.IsNullOrEmpty(relatedPost.CoverImageUrl))
+                                {
+                                    <img src="@relatedPost.CoverImageUrl" class="card-img-top rounded" 
+                                         style="height: 140px; object-fit: cover;" alt="@relatedPost.Title">
+                                }
+                                <div class="card-body px-0">
+                                    <h6 class="card-title">
+                                        <a href="@Url.Action("Post", "Blog", new { id = relatedPost.Id })" 
+                                           class="text-decoration-none text-dark">@relatedPost.Title</a>
+                                    </h6>
+                                    <div class="d-flex align-items-center">
+                                        <small class="text-muted">@relatedPost.ReadTime دقیقه مطالعه</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
     </div>
-    <hr />
-    <a href="@Url.Action("Index", "Blog")" class="btn btn-primary">Back to Blog</a>
 </div>

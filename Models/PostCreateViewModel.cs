@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Orb.Web.Models
 {
-    public class BlogPost
+    public class PostCreateViewModel
     {
-        public int Id { get; set; }
-        
         [Required(ErrorMessage = "عنوان مقاله الزامی است")]
         [StringLength(100, ErrorMessage = "عنوان نباید بیشتر از {1} کاراکتر باشد")]
         public string Title { get; set; }
@@ -19,22 +15,8 @@ namespace Orb.Web.Models
         
         public string CoverImageUrl { get; set; }
         
-        public DateTime CreatedAt { get; set; }
+        public string Tags { get; set; }
         
-        public DateTime? UpdatedAt { get; set; }
-        
-        public bool IsPublished { get; set; }
-        
-        public int ReadTime { get; set; }
-        
-        public int AuthorId { get; set; }
-        
-        public User Author { get; set; }
-        
-        public List<string> Tags { get; set; }
-        
-        public int ViewCount { get; set; }
-        
-        public int LikeCount { get; set; }
+        public bool PublishImmediately { get; set; } = true;
     }
 }

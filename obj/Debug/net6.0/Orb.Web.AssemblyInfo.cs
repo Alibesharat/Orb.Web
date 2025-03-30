@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Orb.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9afdfe423a86e7b4ebcba06cac4e173fc5cc862f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Orb.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Orb.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,0 +1,108 @@
+@model IEnumerable<Orb.Web.Models.BlogPost>
+@{
+    ViewData["Title"] = "مقالات من";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="d-flex align-items-center mb-4">
+        <h1>مقالات من</h1>
+        <div class="ms-auto">
+            <a asp-controller="Blog" asp-action="New" class="btn btn-dark">
+                <i class="fas fa-plus me-2"></i> مقاله جدید
+            </a>
+        </div>
+    </div>
+    
+    @if (Model != null && Model.Any())
+    {
+        <ul class="nav nav-tabs mb-4">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#published">منتشر شده</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#drafts">پیش‌نویس‌ها</a>
+            </li>
+        </ul>
+        
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="published">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>عنوان</th>
+                                <th>تاریخ انتشار</th>
+                                <th>بازدید</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var post in Model.Where(p => p.IsPublished))
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="@Url.Action("Post", "Blog", new { id = post.Id })" class="text-decoration-none">
+                                            @post.Title
+                                        </a>
+                                    </td>
+                                    <td>@post.CreatedAt.ToString("yyyy/MM/dd")</td>
+                                    <td>@post.ViewCount</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@post.Id" class="btn btn-sm btn-outline-secondary">
+                                            ویرایش
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="drafts">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>عنوان</th>
+                                <th>آخرین ویرایش</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var post in Model.Where(p => !p.IsPublished))
+                            {
+                                <tr>
+                                    <td>@post.Title</td>
+                                    <td>@(post.UpdatedAt ?? post.CreatedAt).ToString("yyyy/MM/dd")</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@post.Id" class="btn btn-sm btn-outline-secondary">
+                                            ویرایش
+                                        </a>
+                                        <form asp-action="Delete" asp-route-id="@post.Id" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" 
+                                                    onclick="return confirm('آیا از حذف این پیش‌نویس اطمینان دارید؟');">
+                                                حذف
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center p-5 bg-light rounded">
+            <h4 class="mb-3">هنوز مقاله‌ای ننوشته‌اید!</h4>
+            <p class="mb-4">ایده‌های خود را با دیگران به اشتراک بگذارید و اولین مقاله خود را بنویسید.</p>
+            <a asp-controller="Blog" asp-action="New" class="btn btn-dark btn-lg">
+                شروع نوشتن
+            </a>
+        </div>
+    }
+</div>
